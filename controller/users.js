@@ -1,10 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 
 // assets imports----------------------------------
-const index = fs.readFileSync("index.html", "utf-8")
-const notFound = fs.readFileSync("404.html", "utf-8")
-const success = fs.readFileSync("200.html", "utf-8")
-const data = JSON.parse(fs.readFileSync("data.json", "utf-8"))
+const data = JSON.parse(fs.readFileSync(path.resolve(__dirname,"data.json"), "utf-8"))
 
 
 const addUsers = (req, res, next) => {
@@ -19,7 +17,7 @@ const getUsers = (req, res) => { res.json(data.users) }
 const getUsersById = (req, res) => {
     console.log(`parameter Id : ${req.params.id}`)
 
-    fs.appendFile("request.txt", `parameter Id : ${req.params.id} at ${req.protocol}://${req.hostname}${req.url} \n`,
+    fs.appendFile(path.resolve(__dirname,"request.txt"), `parameter Id : ${req.params.id} at ${req.protocol}://${req.hostname}${req.url} \n`,
         (err) => { })
     const reqId = +req.params.id
     const requestUserData = data.users.find(p => p.id === reqId)

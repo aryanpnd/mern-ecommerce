@@ -48,7 +48,7 @@ app.use("/", productRoutes, UserRoutes)
 // page not found API
 app.use('*',(req, res) => { res.status(200).sendFile(path.resolve(__dirname,'build','index.html')) })
 
-app.use((req, res) => { res.status(404).sendFile("D:/myfiles/CS stuffs/Programming/nodejs/playground/restAPI/404.html") })
+app.use((req, res) => { res.status(404).sendFile(path.resolve(__dirname,'404.html')) })
 
 
 app.listen(process.env.PORT)
