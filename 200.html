@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Status Code UI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: scale(1.05);
+    }
+
+    h1 {
+      font-size: 36px;
+      margin: 0 0 20px;
+    }
+
+    p {
+      font-size: 18px;
+      margin: 0 0 30px;
+    }
+
+    .status-code {
+      font-size: 72px;
+      font-weight: bold;
+      margin: 0;
+      color: #279d5b;
+    }
+
+    .status-message {
+      font-size: 24px;
+      margin: 0;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Page Found</h1>
+    <p class="status-code">200</p>
+    <p class="status-message">The requested page found.</p>
+  </div>
+</body>
+</html>

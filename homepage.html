@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modern UI Homepage</title>
+    <style>
+        body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    animation: slideDown 1s ease-in-out;
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.hero {
+    background-image: linear-gradient(to right, #f39c12, #e67e22);
+    color: #fff;
+    padding: 100px 0;
+    text-align: center;
+}
+
+.hero-content {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.hero-content h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    animation: slideUp 1s ease-in-out 1s forwards;
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.hero-content h2 span {
+    display: inline-block;
+    position: relative;
+}
+
+.hero-content h2 span::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #fff;
+    transition: width 0.3s ease;
+}
+
+.hero-content h2 span:hover::before {
+    width: 100%;
+}
+
+.hero-content p {
+    font-size: 20px;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in-out 1.5s forwards;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #f39c12;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    animation: fadeIn 1s ease-in-out 2s forwards;
+}
+
+.btn:hover {
+    background-color: #e67e22;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Homepage</h1>
+    </header>
+    <section class="hero">
+        <div class="hero-content">
+            <h2><span>This is the Homepage</span></h2>
+            <p>using backend as nodejs and express</p>
+            <a href="#" class="btn">click me</a>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2023 Homepage. All rights reserved.</p>
+    </footer>
+</body>
+</html>
