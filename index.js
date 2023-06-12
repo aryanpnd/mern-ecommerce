@@ -2,7 +2,7 @@
 require('dotenv').config()
 
 const mongoose = require('mongoose');
-const cors = require('cors')
+// const cors = require('cors')
 const path = require('path')
 
 const express = require('express');
@@ -13,7 +13,7 @@ const { UserRoutes } = require('./routes/users');
 const app = express() // intializing express
 app.use(express.json())
 
-app.use(cors()) //cors
+// app.use(cors()) //cors
 
 // console.log(process.env.DB_PASS) // testing dotenv 
 
