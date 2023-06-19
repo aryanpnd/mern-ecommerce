@@ -1,0 +1,3 @@
+const hostname = ""
+
+export {hostname}

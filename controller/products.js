@@ -1,5 +1,14 @@
-const fs = require('fs');
 const { productSchema, Product } = require('../model/products');
+
+
+// total count of products available in database
+const totalProducts = async (req, res) => {
+    await Product.count()
+        .then((data) => {
+            res.json(data)
+        })
+        .catch((err) => { res.send(err) })
+}
 
 // add a product
 const addProducts = async (req, res, next) => {
@@ -17,11 +26,33 @@ const addProducts = async (req, res, next) => {
 
 // get all the products
 const getProducts = async (req, res) => {
-    await Product.find()
-        .then((docs) => { res.status(200).json(docs) })
-        .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
-    // or
-    // await Product.find({price:{$gte:req.body.price}}).then((s)=>res.json(s))
+    let query = Product.find()
+
+    // pagination
+    if (req.query.pagesize) {
+        const pageSize = req.query.pagesize // no of data in one page 
+        const pageNo = req.query.pageno // which no of page needed 
+        const product = query.sort({ [req.query.sortby]: req.query.order }).skip(pageSize * (pageNo - 1)).limit(pageSize).exec()
+        await product
+            .then((docs) => { res.status(200).json(docs) })
+            .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
+    }
+    // sorting
+    // else if (req.query.sortby) {
+    //     const result = req.query.result
+    //     const product = query.sort({ [req.query.sortby]: req.query.order }).limit(result).exec() //limit is just for limiting the number of data from the DB and exex is for executing the command
+    //     await product
+    //         .then((docs) => {
+    //             res.status(200).json(docs) // 
+    //         })
+    //         .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
+    // }
+    //all products
+    else {
+        query
+            .then((docs) => { res.status(200).json(docs) })
+            .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
+    }
 }
 
 
@@ -52,10 +83,10 @@ const patchProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
     const reqId = req.params.id
-    await Product.findByIdAndRemove(reqId) 
-    .then((docs) => { res.status(200).send(`Deleted in products list at product Id:${reqId}`) })
-    .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
+    await Product.findByIdAndRemove(reqId)
+        .then((docs) => { res.status(200).send(`Deleted in products list at product Id:${reqId}`) })
+        .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
 
 }
 
-module.exports = { addProducts, deleteProduct, updateProduct, patchProduct, getProducts, getProductsById }
+module.exports = { totalProducts, addProducts, deleteProduct, updateProduct, patchProduct, getProducts, getProductsById }

@@ -1,61 +1,58 @@
-const fs = require('fs');
-const path = require('path');
-
-// assets imports----------------------------------
-const data = JSON.parse(fs.readFileSync("data.json", "utf-8"))
+const {User } = require('../model/user');
+const jwt = require("jsonwebtoken")
 
 
-const addUsers = (req, res, next) => {
-    res.json(`successfully added ${JSON.stringify(req.body.firstName)} with Id no : ${req.body.id}`)
-    data.users.push(req.body)
-    // res.send("User add successfully")
-    // res.json(data.Users.find(id=>id.id===1))
-}
-
-const getUsers = (req, res) => { res.json(data.users) }
-
-const getUsersById = (req, res) => {
-    console.log(`parameter Id : ${req.params.id}`)
-
-    fs.appendFile(path.resolve(__dirname,"request.txt"), `parameter Id : ${req.params.id} at ${req.protocol}://${req.hostname}${req.url} \n`,
-        (err) => { })
-    const reqId = +req.params.id
-    const requestUserData = data.users.find(p => p.id === reqId)
-    requestUserData == undefined ? res.send(data.users) : res.send(requestUserData)
-}
-
-const updateUser = (req, res) => {
-    const reqId = +req.params.id
-    const UserIndex = data.users.findIndex(p => p.id === reqId)
-    data.users.splice(UserIndex, 1, { id: reqId, ...req.body })
-    res.send(`Updated in User list with User Id:${reqId}`)
+const addUser = async (req, res, next) => {
+    const user = new User(req.body)
+    var token = jwt.sign({ email: req.body.email }, process.env.SECRET);
+    user.token = token;
+    await user.save()
+        .then((docs) => { res.status(200).send(`User registered successfully `) })
+        .catch((err) => { res.status(400).json({"error":err}) })
 
 }
 
-
-const patchUser = (req, res) => {
-    const reqId = +req.params.id
-    const UserIndex = data.users.findIndex(p => p.id === reqId)
-
-    // approach 1 to replace
-    const UsersCopy = data.users[UserIndex]
-    data.users.splice(UserIndex, 1, { ...UsersCopy, ...req.body, })
-
-    // sending response
-    res.send(`Updated in User at User Id:${reqId}  with ${[...Object.keys(req.body)]}: ${[...Object.values(req.body)]}`)
-
-}
+// // get all the products
+// const getProducts = async (req, res) => {
+//     await Product.find()
+//         .then((docs) => { res.status(200).json(docs) })
+//         .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
+//     // or
+//     // await Product.find({price:{$gte:req.body.price}}).then((s)=>res.json(s))
+// }
 
 
-const deleteUser = (req, res) => {
-    const reqId = +req.params.id
-    const UserIndex = data.users.findIndex(p => p.id === reqId)
+// const getProductsById = async (req, res) => {
+//     await Product.findById(req.params.id)
+//         .then((docs) => { res.status(200).json(docs) })
+//         .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
+// }
 
-    data.users.splice(UserIndex, 1)
+// //update and overwrite 
+// const updateProduct = async (req, res) => {
+//     await Product.findOneAndReplace({ _id: req.params.id }, req.body, { new: true })
+//         .then((docs) => { res.status(200).send(`product at id no:${req.params.id} has been replaced by <br/> ${docs}`) })
+//         .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
 
-    // sending response
-    res.send(`Deleted in User with User Id:${reqId}`)
+// }
 
-}
 
-module.exports = { addUsers, deleteUser, updateUser, patchUser, getUsers, getUsersById }
+// //update not overwrite
+// const patchProduct = async (req, res) => {
+//     await Product.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+//         .then((docs) => { res.status(200).send(`Update in products list at product Id:${req.params.id}  from ${[...Object.keys(req.body)]} to ${[...Object.values(req.body)]}`) })
+//         .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
+
+
+// }
+
+
+// const deleteProduct = async (req, res) => {
+//     const reqId = req.params.id
+//     await Product.findByIdAndRemove(reqId) 
+//     .then((docs) => { res.status(200).send(`Deleted in products list at product Id:${reqId}`) })
+//     .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
+
+// }
+
+module.exports = { addUser,}

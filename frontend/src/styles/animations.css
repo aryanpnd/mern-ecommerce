@@ -1,0 +1,29 @@
+.dropAnim{
+    animation: dropAnimFrame 0.5s ease-out 0s 1 normal none;
+}
+@keyframes dropAnimFrame {
+	0% {
+		opacity: 0;
+		transform: translateY(-250px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.slideRightBounceAnim{
+	animation: slideRightBounce  0.5s ease 0s 1 normal forwards;
+}
+@keyframes slideRightBounce  {
+	0% {
+		opacity: 0;
+		transform: translateY(-250px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

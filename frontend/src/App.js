@@ -6,10 +6,13 @@ import {
   BrowserRouter,
   createBrowserRouter
 } from "react-router-dom";
-import Homepage from "./pages/homepage";
-import Products from "./pages/products";
-import SearchAppBar from "./pages/components/appbar";
-import { Button } from "@mui/joy";
+import Homepage from "./pages/homepage/homepage";
+import SearchAppBar from "./pages/components/appbar/appbar";
+import { Box, Button } from "@mui/joy";
+import AlertToast from "./pages/components/miscellaneous/Alert";
+import { useContext } from "react";
+import { productContext } from "./context/productContext";
+import Addproducts from "./pages/addproducts/Addproducts";
 
 // const router = createBrowserRouter([
 
@@ -31,15 +34,25 @@ import { Button } from "@mui/joy";
 // ]);
 
 
+
 function App() {
+  const { alert } = useContext(productContext)
+
   return (
-      <div className="App" >
-        <SearchAppBar />
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="addproduct" element={<Products />} />
-        </Routes>
-      </div>
+    <div className="App" style={{ height: "100%", overflow: "hidden" }}>
+
+      {/* Alert */}
+      {alert.map((values, index) => (
+        <AlertToast key={index} show={values.show} title={values.title} icon={values.icon} color={values.color} duration={values.duration} />
+      ))}
+
+      <SearchAppBar />
+      <Box sx={{ width: "100%", height: "12%" }}> </Box>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="addproduct" element={<Addproducts />} />
+      </Routes>
+    </div>
     // <RouterProvider router={router} />
   );
 }
