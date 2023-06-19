@@ -2,7 +2,7 @@
 require('dotenv').config()
 
 const mongoose = require('mongoose');
-const cors = require('cors')
+// const cors = require('cors')
 const path = require('path')
 
 const express = require('express');
@@ -20,7 +20,7 @@ const session = require('express-session');
 const app = express()
 app.use(express.json())
 
-app.use(cors()) //using cors for accepting request from different port in same machine
+// app.use(cors()) //using cors for accepting request from different port in same machine
 // ------------------------------------------------------------------------
 
 
