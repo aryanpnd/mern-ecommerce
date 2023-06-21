@@ -67,7 +67,8 @@ app.use("/", AuthRoutes)
 
 // ------------------------------homepage route/api-------------------------
 app.use(sessionCheck)
-app.use(express.static(path.join(__dirname, 'build')));
+app.use("/",express.static(path.join(__dirname, 'build')));
+// app.use("/app",express.static(path.join(__dirname, 'build2')));
 // ---------------------------------------------------------------------------
 
 

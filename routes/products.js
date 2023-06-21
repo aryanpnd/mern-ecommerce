@@ -1,6 +1,6 @@
 const express = require('express');
 const { addProducts, deleteProduct, updateProduct, patchProduct, getProducts, getProductsById, totalProducts } = require("../controller/products")
-
+const path = require('path')
 const productRoutes = express.Router()
 
 
